@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import Chess from "chess.js"; // import Chess from  "chess.js"(default) if recieving an error about new Chess not being a constructor
 
 const STOCKFISH = window.STOCKFISH;
 const game = new Chess();
 let timer
+let gameIsOver = false
 
 const players = {
   human: {
@@ -21,6 +22,8 @@ const players = {
     hasMoved: false
   }
 }
+
+
 
 function generateLifeClock () {
   let timeBankInSeconds = (Math.floor(((Math.random() * 9) * 60) + 60))
@@ -39,12 +42,11 @@ function togglePlayer() {
 
 class Stockfish extends Component {
   static propTypes = { children: PropTypes.func };
-
-  state = { fen: "start" };
-
+  state = { 
+    fen: "start",
+   };
   componentDidMount() {
     this.setState({ fen: game.fen() });
-
     this.engineGame().prepareMove();
 
     players.human.lifeClock = generateLifeClock()
@@ -63,12 +65,10 @@ class Stockfish extends Component {
     // illegal move
     if (move === null) return;
 
-    console.log('The human moved')
-      console.log('human lifeClock', players.human.lifeClock)
-      clearInterval(timer)
-      timer = setInterval(() => {
-        players.computer.lifeClock = elapseTime(players.computer.lifeClock)
-      }, 100)
+    clearInterval(timer)
+    timer = setInterval(() => {
+      players.computer.lifeClock = elapseTime(players.computer.lifeClock)
+    }, 100)
 
     return new Promise(resolve => {
       this.setState({ fen: game.fen() });
@@ -96,14 +96,15 @@ class Stockfish extends Component {
     let announced_game_over;
     // do not pick up pieces if the game is over
     // only pick up pieces for White
-
+    let that = this
     setInterval(function() {
       if (announced_game_over) {
         return;
       }
-
-      if (game.game_over()) {
+      if (game.game_over() || players.human.lifeClock <= 0 || players.computer.lifeclock <= 0) {
         announced_game_over = true;
+        gameIsOver = true
+        that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock)
       }
     }, 500);
 
@@ -241,8 +242,6 @@ class Stockfish extends Component {
           // isEngineRunning = false;
           game.move({ from: match[1], to: match[2], promotion: match[3] });
           this.setState({ fen: game.fen() });
-          console.log('the computer has moved')
-          console.log('computer lifeClock', players.computer.lifeClock)
           clearInterval(timer)
           timer = setInterval(() => {
              players.human.lifeClock = elapseTime(players.human.lifeClock)
@@ -292,13 +291,13 @@ class Stockfish extends Component {
       },
       prepareMove: function() {
         prepareMove();
-      }
+      },
     };
   };
 
-  render() {
+  render() {    
     const { fen } = this.state;
-    return this.props.children({ position: fen, onDrop: this.onDrop });
+    return this.props.children({ position: fen, onDrop: this.onDrop })
   }
 }
 

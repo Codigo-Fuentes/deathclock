@@ -1,30 +1,43 @@
 import React from "react";
 import Chessboard from "chessboardjsx";
 import StockFish from "./integrations/Stockfish.js";
+import Skull from './skull.js'
 
 class Demo extends React.Component {
   constructor(props){
     super(props)
+    this.handleGameOver = this.handleGameOver.bind(this)
     this.state = {
       playerClock : 0,
       cpuClock : 0,
-      gameOver : false,
+      gameOver: false
       }
     }
 
+  handleGameOver(over, playerClock, cpuClock) {
+      this.setState({gameOver: over})
+      this.setState({playerClock: playerClock})
+      this.setState({cpuClock: cpuClock})
+      return
+    }
+
   render() {
+
     return (
-      <div style={divStyle}>
+      <body style={divStyle}>
       <div>
         <header>
-          <br></br>
-          <img src="deathclock-logo.png" alt="logo" style={logoStyle}></img>
-          <p color="white" style={quoteStyle}>{deathQuotes[rng]}</p>
+          <Skull
+          gameOver={this.state.gameOver}
+          playerClock={this.state.playerClock}
+          cpuClock={this.state.cpuClock}
+          ></Skull>
         </header>
         </div>
       <div style={boardsContainer}>
-        <StockFish>
-          {({ position, onDrop }) => (
+        <StockFish handleGameOver={this.handleGameOver}>
+          {
+            ({ position, onDrop }) => (
             <Chessboard
               id="chessboard"
               position={position}
@@ -35,48 +48,23 @@ class Demo extends React.Component {
               darkSquareStyle={darkSquareStyle}
               lightSquareStyle={lightSquareStyle}
               pieces={pieces}
+              transitionDuration={0}
             />
-          )}
+          )
+          }
         </StockFish>
       </div>
       <br/>
       <br/>
-      </div>
+      </body>
     );
   }
 }
 
 export default Demo;
 
-
-const deathQuotes = [
-  "When people don't express themselves, they die one piece at a time.", // --Laurie Halse Anderson
-  "Six feet of earth makes us all equal.", // Italian saying
-  "Death never takes a wise man by surprise.", // Jean de la Fontaine
-  "The first breath is the beginning of death.", // Thomas Fuller
-  "Certain is death for the born.", // Bhagavad Gita
-  "Man suffers a paralyzing fear...A fear of time running out.", // Mitch Albom
-  "The grey rain-curtain of this world rolls back...and then you see it." // Tolkien
-]
-
-const rng = Math.floor(Math.random() * deathQuotes.length) // to pick a random quote
-
 const divStyle = {
   backgroundColor: "black",
-}
-
-const logoStyle = {
-  height: 35,
-  width: 140,
-  paddingLeft: 10,
-  opacity: .3
-}
-
-const quoteStyle = {
-  textAlign: "center",
-  fontFamily: "Garamond",
-  fontSize: 18,
-  color: "grey"
 }
 
 const boardsContainer = {
