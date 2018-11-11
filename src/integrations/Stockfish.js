@@ -26,7 +26,7 @@ const players = {
 
 
 function generateLifeClock () {
-  let timeBankInSeconds = (Math.floor(((Math.random() * 9) * 60) + 60))
+  let timeBankInSeconds = (Math.floor(((Math.random() * 4) * 60) + 60))
   return timeBankInSeconds
 }
 
