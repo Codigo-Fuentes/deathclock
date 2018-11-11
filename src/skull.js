@@ -58,7 +58,7 @@ class Skull extends React.Component {
   render() {
     return (
       <div>
-        <img src="deathclock-logo.png" alt="logo" style={logoStyle} href="http://deathclock.life"></img>
+        <a href="https://deathclock.life"><img src="deathclock-logo.png" alt="logo" style={logoStyle}></img></a>
         {this.chooseDisplay()}
       </div>
     )
