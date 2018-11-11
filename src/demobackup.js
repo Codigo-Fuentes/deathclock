@@ -12,59 +12,51 @@ class Demo extends React.Component {
     this.state = {
       playerClock : 0,
       cpuClock : 0,
-      gameOver: false,
-      humanLifeSpan: 0,
-      cpuLifeSpan: 0
+      gameOver: false
       }
     }
 
-  handleGameOver(over, playerClock, cpuClock, humanSpan, cpuSpan) {
-      console.log(humanSpan, cpuSpan)
+  handleGameOver(over, playerClock, cpuClock) {
       this.setState({gameOver: over})
       this.setState({playerClock: playerClock})
       this.setState({cpuClock: cpuClock})
-      this.setState({humanLifeSpan: humanSpan})
-      this.setState({cpuLifeSpan: cpuSpan})
       return
     }
 
   render() {
+
     return (
-      <body>
-        <Skull/>
-        <div class="grid">
-          <div class="stage-right"></div>
-          <div class="board-container">
-            <StockFish handleGameOver={this.handleGameOver}>
-              {
-                ({ position, onDrop }) => (
-                  <Chessboard
-                    id="chessboard"
-                    position={position}
-                    width={600}
-                    onDrop={onDrop}
-                    boardStyle={boardStyle}
-                    orientation="black"
-                    darkSquareStyle={darkSquareStyle}
-                    lightSquareStyle={lightSquareStyle}
-                    pieces={pieces}
-                    transitionDuration={0}
-                  />
-                )
-              }
-            </StockFish>
-          </div>
-          <div class="stage-left">
-            <StageLeft
-              gameOver={this.state.gameOver}
-              playerClock={this.state.playerClock}
-              cpuClock={this.state.cpuClock}
-              humanLifeSpan={this.state.humanLifeSpan}
-              cpuLifeSpan={this.state.cpuLifeSpan}
-              >
-            </StageLeft>
-          </div>
+      <body style={divStyle}>
+      <div>
+        <header>
+          <Skull
+          gameOver={this.state.gameOver}
+          playerClock={this.state.playerClock}
+          cpuClock={this.state.cpuClock}
+          ></Skull>
+        </header>
         </div>
+      <div style={boardsContainer}>
+        <StockFish handleGameOver={this.handleGameOver}>
+          {
+            ({ position, onDrop }) => (
+            <Chessboard
+              id="chessboard"
+              position={position}
+              width={600}
+              onDrop={onDrop}
+              boardStyle={boardStyle}
+              orientation="black"
+              darkSquareStyle={darkSquareStyle}
+              lightSquareStyle={lightSquareStyle}
+              pieces={pieces}
+              transitionDuration={0}
+            />
+          )
+          }
+        </StockFish>
+      </div>
+      <StageLeft></StageLeft>
       </body>
     );
   }
@@ -72,6 +64,19 @@ class Demo extends React.Component {
 
 export default Demo;
 
+const divStyle = {
+  backgroundColor: "black",
+}
+
+const boardsContainer = {
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+  background: "#000000",
+  background: "-webkit-linear-gradient(#000000, #444444)",
+  background: "linear-gradient(#000000, #444444)",
+  paddingBottom: 20
+};
 const boardStyle = {
   borderRadius: "5px",
   boxShadow: `0 5px 15px rgba(0, 0, 0, 0.5)`,

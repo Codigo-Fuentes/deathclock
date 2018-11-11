@@ -6,6 +6,8 @@ const STOCKFISH = window.STOCKFISH;
 const game = new Chess();
 let timer
 let gameIsOver = false
+let humanLifeSpan
+let cpuLifeSpan
 
 const players = {
   human: {
@@ -51,6 +53,8 @@ class Stockfish extends Component {
 
     players.human.lifeClock = generateLifeClock()
     players.computer.lifeClock = generateLifeClock()
+    humanLifeSpan = players.human.lifeClock
+    cpuLifeSpan = players.computer.lifeClock
     document.title = "Death Clock"
   }
 
@@ -104,7 +108,7 @@ class Stockfish extends Component {
       if (game.game_over() || players.human.lifeClock <= 0 || players.computer.lifeclock <= 0) {
         announced_game_over = true;
         gameIsOver = true
-        that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock)
+        that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock, humanLifeSpan, cpuLifeSpan)
       }
     }, 500);
 
