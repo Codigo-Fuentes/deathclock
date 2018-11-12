@@ -27,9 +27,9 @@ const players = {
 
 
 
-function generateLifeClock () {
-  let timeBankInSeconds = (Math.floor(((Math.random() * 4) * 60) + 60))
-  return timeBankInSeconds
+function generateLifeClock (player) {
+  if (player === 'human') return (Math.floor(((Math.random() * 4) * 60) + 60))
+  else return (Math.floor(Math.random() * 60))
 }
 
 function elapseTime(timeBank) {
@@ -51,8 +51,8 @@ class Stockfish extends Component {
     this.setState({ fen: game.fen() });
     this.engineGame().prepareMove();
 
-    players.human.lifeClock = generateLifeClock()
-    players.computer.lifeClock = generateLifeClock()
+    players.human.lifeClock = generateLifeClock('human')
+    players.computer.lifeClock = generateLifeClock('cpu')
     humanLifeSpan = players.human.lifeClock
     cpuLifeSpan = players.computer.lifeClock
     document.title = "Death Clock"
@@ -105,12 +105,12 @@ class Stockfish extends Component {
       if (announced_game_over) {
         return;
       }
-      if (game.game_over() || players.human.lifeClock <= 0 || players.computer.lifeclock <= 0) {
+      if (game.game_over() || players.human.lifeClock <= 0 || players.computer.lifeClock <= 0) {
         announced_game_over = true;
         gameIsOver = true
         that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock, humanLifeSpan, cpuLifeSpan)
       }
-    }, 500);
+    }, 1);
 
     function uciCmd(cmd, which) {
       // console.log('UCI: ' + cmd);
@@ -173,7 +173,7 @@ class Stockfish extends Component {
       stopClock();
       // this.setState({ fen: game.fen() });
       let turn = game.turn() === "w" ? "white" : "black";
-      if (!game.game_over()) {
+      if (!game.game_over() && !gameIsOver) {
         // if (turn === playerColor) {
         if (turn !== playerColor) {
           // playerColor = playerColor === 'white' ? 'black' : 'white';

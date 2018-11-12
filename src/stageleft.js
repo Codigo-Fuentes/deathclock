@@ -3,10 +3,11 @@ import Styles from'./styles.css'
 
 export default class StageLeft extends React.Component {
 
-  chooseDisplay() {
-    if (this.props.gameOver === false) return null
-    else return this.displayTable()
-  }
+  // can call this in the render instead if you want to hide the clock during gameplay
+  // chooseDisplay() {
+  //   if (this.props.gameOver === false) return null
+  //   else return this.displayTable()
+  // }
 
   displayTable() {
     return (
@@ -37,9 +38,10 @@ export default class StageLeft extends React.Component {
 const displayTime = (time) => {
   var minutes = Math.floor(time / 60)
   var seconds = time - minutes * 60
-  if (time <= 0 || isNaN(time)) {
+  if (time === 0 || isNaN(time)) {
     return '???';
   }
+  else if (time <= 0) return `death`
   else {
     if (seconds < 10) return `${String(minutes)}:0${String(seconds)}`
     else return `${String(minutes)}:${String(seconds)}`
