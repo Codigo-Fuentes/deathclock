@@ -29,11 +29,11 @@ const players = {
 
 function generateLifeClock (player) {
   if (player === 'human') return (Math.floor(((Math.random() * 4) * 60) + 60))
-  else return (Math.floor(Math.random() * 35) + 25)
+  else return (Math.floor(Math.random() * 50) + 40)
 }
 
 function elapseTime(timeBank) {
-  let newTimeBank = (timeBank - .1)
+  let newTimeBank = (timeBank - .01)
   return newTimeBank
 }
 
@@ -72,7 +72,7 @@ class Stockfish extends Component {
     clearInterval(timer)
     timer = setInterval(() => {
       players.computer.lifeClock = elapseTime(players.computer.lifeClock)
-    }, 100)
+    }, 10)
 
     return new Promise(resolve => {
       this.setState({ fen: game.fen() });
@@ -110,7 +110,7 @@ class Stockfish extends Component {
         gameIsOver = true
         that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock, humanLifeSpan, cpuLifeSpan)
       }
-    }, 1);
+    }, 10);
 
     function uciCmd(cmd, which) {
       // console.log('UCI: ' + cmd);
@@ -244,14 +244,16 @@ class Stockfish extends Component {
         /// Did the AI move?
         if (match) {
           // isEngineRunning = false;
-          game.move({ from: match[1], to: match[2], promotion: match[3] });
-          this.setState({ fen: game.fen() });
-          clearInterval(timer)
-          timer = setInterval(() => {
-             players.human.lifeClock = elapseTime(players.human.lifeClock)
-          }, 100)
-          togglePlayer()
-          prepareMove();
+          if (!announced_game_over) {
+            game.move({ from: match[1], to: match[2], promotion: match[3] });
+            this.setState({ fen: game.fen() });
+            clearInterval(timer)
+            timer = setInterval(() => {
+               players.human.lifeClock = elapseTime(players.human.lifeClock)
+            }, 10)
+            togglePlayer()
+            prepareMove();
+          }
           uciCmd("eval", evaler);
           //uciCmd("eval");
           /// Is it sending feedback?
