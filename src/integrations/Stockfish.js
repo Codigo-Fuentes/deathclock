@@ -29,7 +29,7 @@ const players = {
 
 function generateLifeClock (player) {
   if (player === 'human') return (Math.floor(((Math.random() * 4) * 60) + 60))
-  else return (Math.floor(Math.random() * 50))
+  else return (Math.floor(Math.random() * 50) + 40)
 }
 
 function elapseTime(timeBank) {
