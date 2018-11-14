@@ -33,7 +33,7 @@ function generateLifeClock (player) {
 }
 
 function elapseTime(timeBank) {
-  let newTimeBank = (timeBank - .01)
+  let newTimeBank = (timeBank - .001)
   return newTimeBank
 }
 
@@ -72,7 +72,7 @@ class Stockfish extends Component {
     clearInterval(timer)
     timer = setInterval(() => {
       players.computer.lifeClock = elapseTime(players.computer.lifeClock)
-    }, 10)
+    }, 1)
 
     return new Promise(resolve => {
       this.setState({ fen: game.fen() });
@@ -110,7 +110,7 @@ class Stockfish extends Component {
         gameIsOver = true
         that.props.handleGameOver(gameIsOver, players.human.lifeClock, players.computer.lifeClock, humanLifeSpan, cpuLifeSpan)
       }
-    }, 10);
+    }, 1);
 
     function uciCmd(cmd, which) {
       // console.log('UCI: ' + cmd);
@@ -250,7 +250,7 @@ class Stockfish extends Component {
             clearInterval(timer)
             timer = setInterval(() => {
                players.human.lifeClock = elapseTime(players.human.lifeClock)
-            }, 10)
+            }, 1)
             togglePlayer()
             prepareMove();
           }

@@ -6,13 +6,20 @@ export default class StageLeft extends React.Component {
   // can call this in the render instead if you want to hide the clock during gameplay
   // chooseDisplay() {
   //   if (this.props.gameOver === false) return null
-  //   else return this.displayTable()
+  //   else return this.displayClock()
   // }
 
-  displayTable() {
+  displayLogo() {
+    if (this.props.gameOver === false) {
+      return <img id="clock-logo" src="deathclock-logo.png" alt="logo"></img>
+    }
+    else return <img id="clock-logo-game-over" src="deathclock-logo.png" alt="logo"></img>
+  }
+
+  displayClock() {
     return (
       <div>
-      <img id="clock-logo" src="deathclock-logo.png" alt="logo"></img>
+      {this.displayLogo()}
       <div class="table">
         <div class="cell" id="cell-a"></div>
         <div class="cell" class="column-b">Human</div>
@@ -30,7 +37,7 @@ export default class StageLeft extends React.Component {
 
   render() {
     return (
-      this.displayTable()
+      this.displayClock()
     )
   }
 }
@@ -41,7 +48,9 @@ const displayTime = (time) => {
   if (time === 0 || isNaN(time)) {
     return '???';
   }
-  else if (time <= 0) return `death`
+  else if (time <= 0) {
+    return `death`
+  }
   else {
     if (seconds < 10) return `${String(minutes)}:0${String(seconds)}`
     else return `${String(minutes)}:${String(seconds)}`

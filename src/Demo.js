@@ -48,7 +48,7 @@ class Demo extends React.Component {
                     darkSquareStyle={darkSquareStyle}
                     lightSquareStyle={lightSquareStyle}
                     //pieces={pieces}
-                    transitionDuration={1000}
+                    transitionDuration={0}
                   />
                 )
               }
@@ -107,7 +107,7 @@ const pieces = {
           paddingTop: 7,
           paddingBottom: 3
         }}
-        src={"light-queen.png"}
+        src={"light-queen.svg"}
         alt={"light queen"}
       />
     ),
@@ -209,7 +209,7 @@ const pieces = {
           paddingTop: 12,
           paddingBottom: 3
         }}
-        src={"dark-bishop.png"}
+        src={"dark-bishop.svg"}
         alt={"dark bishop"}
       />
     ),
