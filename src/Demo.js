@@ -18,6 +18,11 @@ class Demo extends React.Component {
       }
     }
 
+    componentDidMount(){
+    document.title = "Death Clock";
+    <link rel="shortcut icon" type="image/png" href="hourglass.ico"/>
+    }
+
   handleGameOver(over, playerClock, cpuClock, humanSpan, cpuSpan) {
       console.log(humanSpan, cpuSpan)
       this.setState({gameOver: over})
@@ -31,7 +36,7 @@ class Demo extends React.Component {
   render() {
     return (
       <body>
-        <Skull/>
+        <Skull gameOver={this.state.gameOver}/>
         <div class="grid">
           <div class="stage-right"></div>
           <div class="board-container">

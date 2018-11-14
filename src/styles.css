@@ -125,6 +125,13 @@ p {
   color: grey;
 }
 
+#death-quotes-game-over {
+  text-align: center;
+  font-family: Pagella;
+  font-size: 18px;
+  color: grey; 
+}
+
 #postmortem {
   align-content: center;
 }

@@ -29,11 +29,11 @@ const players = {
 
 function generateLifeClock (player) {
   if (player === 'human') return (Math.floor(((Math.random() * 4) * 60) + 60))
-  else return (Math.floor(Math.random() * 50) + 40)
+  else return (Math.floor(Math.random() * 50))
 }
 
 function elapseTime(timeBank) {
-  let newTimeBank = (timeBank - .001)
+  let newTimeBank = (timeBank - .01)
   return newTimeBank
 }
 
@@ -50,12 +50,10 @@ class Stockfish extends Component {
   componentDidMount() {
     this.setState({ fen: game.fen() });
     this.engineGame().prepareMove();
-
     players.human.lifeClock = generateLifeClock('human')
     players.computer.lifeClock = generateLifeClock('cpu')
     humanLifeSpan = players.human.lifeClock
     cpuLifeSpan = players.computer.lifeClock
-    document.title = "Death Clock"
   }
 
   onDrop = ({ sourceSquare, targetSquare }) => {
@@ -72,7 +70,7 @@ class Stockfish extends Component {
     clearInterval(timer)
     timer = setInterval(() => {
       players.computer.lifeClock = elapseTime(players.computer.lifeClock)
-    }, 1)
+    }, 10)
 
     return new Promise(resolve => {
       this.setState({ fen: game.fen() });
@@ -250,7 +248,7 @@ class Stockfish extends Component {
             clearInterval(timer)
             timer = setInterval(() => {
                players.human.lifeClock = elapseTime(players.human.lifeClock)
-            }, 1)
+            }, 10)
             togglePlayer()
             prepareMove();
           }

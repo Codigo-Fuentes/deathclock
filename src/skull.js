@@ -2,12 +2,19 @@ import React from 'react'
 import Styles from'./styles.css'
 
 class Skull extends React.Component { 
+
+  displayQuote() {
+    if (this.props.gameOver === false) {
+      return <p id="death-quotes">{deathQuotes[ran]}</p>
+    }
+    else return <p id="death-quotes-game-over">{deathQuotes[ran]}</p>
+  }
   
   render() {
     return (
       <div>
         <a href="https://deathclock.life"><img id="head-logo" src="deathclock-logo.png" alt="logo"></img></a>
-        <p id="death-quotes">{deathQuotes[ran]}</p>
+        {this.displayQuote()}
       </div>
     )
   }
