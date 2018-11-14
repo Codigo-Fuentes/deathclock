@@ -67,7 +67,7 @@ class Stockfish extends Component {
     });
 
     // illegal move
-    if (move === null) return;
+    if (move === null || gameIsOver === true) return;
 
     clearInterval(timer)
     timer = setInterval(() => {

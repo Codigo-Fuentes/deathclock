@@ -47,7 +47,7 @@ class Demo extends React.Component {
                     orientation="black"
                     darkSquareStyle={darkSquareStyle}
                     lightSquareStyle={lightSquareStyle}
-                    pieces={pieces}
+                    //pieces={pieces}
                     transitionDuration={1000}
                   />
                 )
