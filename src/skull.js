@@ -12,7 +12,7 @@ class Skull extends React.Component {
   
   render() {
     return (
-      <div>
+      <div id="skull">
         <a href="https://deathclock.life"><img id="head-logo" src="deathclock-logo.png" alt="logo"></img></a>
         {this.displayQuote()}
       </div>
