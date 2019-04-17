@@ -1,11 +1,22 @@
+@font-face {
+  font-family: Cormorant-Regular;
+  src: url(../src/fonts/Cormorant-Regular.ttf);
+}
+
+@font-face {
+  font-family: Cormorant-SemiBoldItalic;
+  src: url(../src/fonts/Cormorant-SemiBoldItalic.ttf);
+}
+
 html {
-  
+  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
   background: black;
+  height: 100%;
 }
 
 button {
@@ -34,11 +45,13 @@ p {
   background: linear-gradient(#000000, #444444);
   align-items: center;
   height: 100%;
+  margin-top: 50px;
 }
 
 .stage-left {
   align-items: center;
   margin: 0 auto;
+  height: 100%;
 }
 
 .stage-right {
@@ -75,6 +88,7 @@ p {
 
   .cell {
     padding-left: 10px;
+    font-family: Cormorant-SemiBoldItalic;
   }
 
   .cell-game-over {
@@ -83,10 +97,12 @@ p {
 
   .column-b {
     padding-left: 20px;
+    font-family: Cormorant-Regular;
   }
 
   .column-c {
     padding-left: 20px;
+    font-family: Cormorant-Regular;
   }
 
 #head-logo {
@@ -119,15 +135,15 @@ p {
 
 #death-quotes {
   text-align: center;
-  font-family: Pagella;
-  font-size: 18px;
+  font-family: Cormorant-Regular;
+  font-size: 30px;
   color: grey;
 }
 
 #death-quotes-game-over {
   text-align: center;
-  font-family: Pagella;
-  font-size: 18px;
+  font-family: Cormorant-Regular;
+  font-size: 30px;
   color: grey; 
 }
 
