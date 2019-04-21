@@ -138,6 +138,7 @@ p {
   font-family: Cormorant-Regular;
   font-size: 30px;
   color: grey;
+  transition: all .2s ease;
 }
 
 #death-quotes-game-over {
@@ -145,6 +146,11 @@ p {
   font-family: Cormorant-Regular;
   font-size: 30px;
   color: grey; 
+}
+
+#death-quotes:hover {
+  color: red;
+  transition: all .2s ease;
 }
 
 #postmortem {
